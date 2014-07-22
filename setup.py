@@ -6,7 +6,7 @@ setup(
     author='Boris Babic',
     author_email='boris.ivan.babic@gmail.com',
     packages=['lockexec'],
-    py_modules=['lockexec'],
+    #py_modules=['lockexec'],
     include_package_data=True,
     url='template url',
     entry_points={
