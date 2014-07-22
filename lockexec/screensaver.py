@@ -18,7 +18,9 @@ class screensaver(object):
         if(hide):
             temp= {'stdout' : subprocess.PIPE, 'stderr' : subprocess.PIPE}
             kwargs.update(temp)
-        return subprocess.Popen(shlex.split(command), shell=True, **kwargs)
+        #if(' ' in command):
+            #command = shlex.split(command)
+        return subprocess.Popen(command, shell=True, **kwargs)
 
     def unlockCommand(self, hide=False):
         return self.run(self.unlock_command)
@@ -28,9 +30,9 @@ class screensaver(object):
 
     def lock(self):
         return self.run(self.LOCKER)
-        self.lockCommand()
 
     def smart(self):
+        self.lockCommand()
         self.lock()
         self.once = True
         self.daemon()
@@ -56,12 +58,12 @@ class screensaver(object):
     def daemonWhile(self):
         while True:
             temp = self.check()
-            if (self.latest != temp and temp):
+            if (self.latest != temp and temp != None ):
                 if (temp == self.UNLOCK):
                     self.unlockCommand()
                     if (self.once):
                         return
-                elif temp == self.LOCK:
+                elif (temp == self.LOCK):
                     self.lockCommand()
                 self.latest = temp
             sleep(1)
@@ -100,7 +102,7 @@ class xscreensaver(screensaver):
         return self.compare(self.getLine())
 
     def daemon(self):
-        self.latest = "junk_value"
         self.watcher()
+        self.latest = self.check()
         self.daemonWhile()
 

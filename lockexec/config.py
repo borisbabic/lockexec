@@ -1,6 +1,20 @@
 import json
 import os
 import argparse
+from functools import wraps
+
+class valueChooser(object):
+    def __init__(self, *args):
+        self.args = args
+
+    def __call__(self, func):
+        def tempFunc (m_self):
+            for arg in self.args:
+                if getattr(m_self, arg, False):
+                    return arg
+            return func(m_self)
+        return tempFunc
+
 
 class baseConfig(object):
     def getPath(self,path):
@@ -37,24 +51,36 @@ class baseConfig(object):
         #print data
         self.updateAttributes(data)
 
+
+    
 class config(baseConfig):
     def __init__(self,argv):
         self.log_file = self.getPath('~/.lockexec.log')
-        self.config_file = self.getPath('~/.lockexec')
+        self.config_file = os.path.expanduser('~/.lockexec')
         self.lock_command = "echo lock"
         self.unlock_command = "echo unlock"
-        self.screensaver = "xscreensaver"
         self.gnome = False
         self.xscreensaver = False
         self.daemon = False
         self.smart = False
-        self.mode = "smart"
+        self._screensaver = "xscreensaver"
+        self._mode = "smart"
         self.parseFile()
         self.parserInit(argv)
-        self.config_file = self.options.config_file
+        self.config_file = self.options.config_file or self.config_file
         self.parseFile()
         self.parseOptions()
-        #print (self.getAttributes(self))
+
+    @property
+    @valueChooser('smart', 'daemon')
+    def mode(self):
+        return self._mode
+
+    @property
+    @valueChooser('xscreensaver', 'gnome')
+    def mode(self):
+        return self._screensaver
+
 
     def parserInit(self, argv):
         parser = argparse.ArgumentParser(description = "Python app for doing stuff on lock/unlock")
