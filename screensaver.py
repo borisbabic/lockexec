@@ -1,5 +1,5 @@
 from time import sleep
-import subprocess
+import subprocess32 as subprocess
 class screensaver(object):
     """Parent class for screensavers"""
 

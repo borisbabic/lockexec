@@ -1,5 +1,6 @@
 from time import sleep
 import subprocess
+import shlex
 class screensaver(object):
     """Parent class for screensavers"""
 
@@ -17,7 +18,7 @@ class screensaver(object):
         if(hide):
             temp= {'stdout' : subprocess.PIPE, 'stderr' : subprocess.PIPE}
             kwargs.update(temp)
-        return subprocess.Popen(command, shell=True, **kwargs)
+        return subprocess.Popen(shlex.split(command), shell=True, **kwargs)
 
     def unlockCommand(self, hide=False):
         return self.run(self.unlock_command)
@@ -99,7 +100,7 @@ class xscreensaver(screensaver):
         return self.compare(self.getLine())
 
     def daemon(self):
-        self.latest = None
+        self.latest = "junk_value"
         self.watcher()
         self.daemonWhile()
 
