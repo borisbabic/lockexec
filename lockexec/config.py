@@ -22,7 +22,7 @@ class baseConfig(object):
 
     def updateAttributes(self,data):
         for key in data:
-            if not data[key] == None:
+            if data[key] != None:
                 setattr(self,key,data[key])
 
     def parseFile(self):
@@ -52,7 +52,6 @@ class baseConfig(object):
         self.updateAttributes(data)
 
 
-    
 class config(baseConfig):
     def __init__(self,argv):
         self.log_file = self.getPath('~/.lockexec.log')
@@ -78,7 +77,7 @@ class config(baseConfig):
 
     @property
     @valueChooser('xscreensaver', 'gnome')
-    def mode(self):
+    def screensaver(self):
         return self._screensaver
 
 
