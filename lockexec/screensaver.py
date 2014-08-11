@@ -21,10 +21,10 @@ class screensaver(object):
         return subprocess.Popen(command, shell=True, **kwargs)
 
     def unlockCommand(self, hide=False):
-        return self.run(self.unlock_command)
+        return self.run(self.unlock_command, hide=hide)
 
     def lockCommand(self, hide=False):
-        return self.run(self.lock_command)
+        return self.run(self.lock_command, hide=hide)
 
     def lock(self):
         return self.run(self.LOCKER)
