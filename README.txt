@@ -2,7 +2,7 @@
 LockExec
 =======
 LockExec lets you do stuff on screen lock, or screen unlock.
-Currently supported screensavers: gnome-screensaver and xscreensaver.
+Currently supported screensaver: xscreensaver.
 
 Installation:
 pip install https://github.com/borisbabic/lockexec/archive/master.zip
@@ -12,4 +12,4 @@ Daemon launches the script and then waits for an indefinite number of lock/unloc
 Once executes the lock command, locks the screen, and does unlock command when the screen is unlocked
 
 example::
-    lockexec --once --gnome --lock-command "echo hello" --unlock-command "echo world"
+    lockexec --daemon --lock-command "echo hello" --unlock-command "echo world"
