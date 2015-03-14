@@ -31,13 +31,12 @@ class baseConfig(object):
             f = open(self.config_file,'r')
             try:
                 data=json.load(f)
-                #print data
                 self.updateAttributes(data)
             except ValueError:
-                #if os.path.isfile(self.config_file) > 0:
+                if os.path.isfile(self.config_file) > 0:
                     print "Bad Config File"
         except IOError:
-            #if os.path.isfile(self.config_file):
+            if os.path.isfile(self.config_file):
                 print "Couldn't open config file {file}".format(file = self.config_file)
         finally:
             if f:

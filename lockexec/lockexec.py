@@ -5,6 +5,8 @@ from screensaver import gnome
 from screensaver import xscreensaver
 
 def main():
+    print "test"
+    exit()
     config = Config(sys.argv[1:])
     if (config.xscreensaver):
         ssclass = xscreensaver
